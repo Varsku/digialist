@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from "react"
 import './App.css';
+import Header from './components/header/Header';
+import Form from './components/form/Form';
+import Table from "./components/table/Table"
+import { participants, tableHeaders } from './constants';
 
 function App() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData(participants);
+  }, []);
+
+  const addUserToList = (newUser) => {
+    setData([...data, newUser])
+  }
+
+  const deleteUser = (user) => {
+    const newUsers = data.filter(u => u.id !== user.id)
+    setData(newUsers)
+  }
+
+  const saveEditUser = (i, user) => {
+    const copy = [...data];
+    copy[i] = user
+    setData(copy);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <div className="Content">
+        <h1 className="Title-text">List of participants</h1>
+        <Form onClick={addUserToList}/>
+        <Table data={data} headers={tableHeaders} deleteUser={deleteUser} saveEditUser={saveEditUser}/>
+      </div>
     </div>
   );
 }
