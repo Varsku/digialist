@@ -4,9 +4,16 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import TableRow from './TableRow';
 
+const initialErrors = {
+    name: "",
+    email: "",
+    phoneNumber: ""
+}
+
 function Table({ data, headers, deleteUser, saveEditUser}) {
   const [sortColumn, setSortColumn] = useState({ key: null, direction: null });
   const [editUser, setEditUser] = useState(null);
+  const [editErrors, setEditErrors] = useState(initialErrors)
 
   const sortData = (users) => {
     if (sortColumn.key !== null) {
@@ -53,9 +60,11 @@ function Table({ data, headers, deleteUser, saveEditUser}) {
   };
 
   const onSave = () => {
-    const indexOf = data.findIndex( u => u.id === editUser.id)
-    saveEditUser(indexOf, editUser);
-    setEditUser(null)
+      if(isValidForm(editUser)) {
+        const indexOf = data.findIndex( u => u.id === editUser.id)
+        saveEditUser(indexOf, editUser);
+        setEditUser(null)
+      }
   };
 
   const setEditModeOn = (user) => {
@@ -65,6 +74,27 @@ function Table({ data, headers, deleteUser, saveEditUser}) {
   const onChange = (e) => {
       const {name, value} = e.target
       setEditUser({...editUser, [name]: value })
+  }
+
+
+  const isValidForm = (values) => {
+    let isValid = true;
+    const regex =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if(values.name.length <=0) {
+      setEditErrors({...editErrors, name: "Name is required"})
+      isValid = false
+    }
+    if(values.phoneNumber.length <= 0) {
+      setEditErrors({...editErrors, phoneNumber: "Phone number is required"})
+      isValid = false
+    }
+
+    if(values.email.length <=0 || regex.test(values.email) === false) {
+      setEditErrors({...editErrors, email: "Email is not valid"})
+      isValid = false
+    }
+    return isValid
   }
 
   return (
@@ -85,6 +115,7 @@ function Table({ data, headers, deleteUser, saveEditUser}) {
           {sortData(data).map((participant, i) => (
             <TableRow
               key={i}
+              errors={editErrors}
               data={editUser !== null && editUser.id === participant.id ? editUser : participant}
               deleteUser={deleteUser}
               onChange={onChange}

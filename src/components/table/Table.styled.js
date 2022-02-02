@@ -3,11 +3,13 @@ import styled from 'styled-components';
 export const TableContainer = styled.div`
   background-color: white;
   margin-top: 10px;
+  padding: 0px 20px;
 `;
 
 export const TableBody = styled.table`
   width: 100%;
   border-collapse: collapse; 
+
 `;
 
 export const TableHead = styled.thead`

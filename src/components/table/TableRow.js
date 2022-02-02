@@ -13,6 +13,7 @@ function TableRow({
   onChange,
   deleteUser,
   setEditMode,
+  errors,
 }) {
 
   const renderContent = () => {
@@ -39,9 +40,9 @@ function TableRow({
     }
     return (
         <>
-            <Td><Input value={data.name} name="name" onChange={onChange} placeholder="Full name"/></Td>
-            <Td><Input value={data.email} name="email" onChange={onChange} placeholder="E-mail address"/></Td>
-            <Td><Input value={data.phoneNumber} name="phoneNumber" onChange={onChange} placeholder="Phone number"/></Td>
+            <Td><Input value={data.name} name="name" onChange={onChange} placeholder="Full name" error={errors.name}/></Td>
+            <Td><Input value={data.email} name="email" onChange={onChange} placeholder="E-mail address" error={errors.email}/></Td>
+            <Td><Input value={data.phoneNumber} name="phoneNumber" onChange={onChange} placeholder="Phone number" error={errors.phoneNumber}/></Td>
             <Td><CancelButton onClick={onCancel}>Cancel</CancelButton></Td>
             <Td><SaveButton onClick={() => onSave(index)}>Save</SaveButton></Td>
         </>
