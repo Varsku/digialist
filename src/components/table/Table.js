@@ -87,7 +87,7 @@ function Table({ data, headers, deleteUser, saveEditUser}) {
     }
     const emailRegex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    const phoneNumberRegex = /^[0-9\b]+$/;
+    const phoneNumberRegex = /^[+]{0,1}[0-9\b]+$/;
 
     if(values.name.length <=0) {
       errors.name= "Name is required"
