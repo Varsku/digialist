@@ -73,27 +73,41 @@ function Table({ data, headers, deleteUser, saveEditUser}) {
 
   const onChange = (e) => {
       const {name, value} = e.target
+      setEditErrors({...editErrors, [name]: ""})
       setEditUser({...editUser, [name]: value })
   }
 
 
   const isValidForm = (values) => {
     let isValid = true;
-    const regex =
+    let errors= {
+        name:"",
+        email: "",
+        phoneNumber: ""
+    }
+    const emailRegex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const phoneNumberRegex = /^[0-9\b]+$/;
+
     if(values.name.length <=0) {
-      setEditErrors({...editErrors, name: "Name is required"})
+      errors.name= "Name is required"
       isValid = false
     }
     if(values.phoneNumber.length <= 0) {
-      setEditErrors({...editErrors, phoneNumber: "Phone number is required"})
+      errors.phoneNumber= "Phone number is required"
       isValid = false
     }
 
-    if(values.email.length <=0 || regex.test(values.email) === false) {
-      setEditErrors({...editErrors, email: "Email is not valid"})
+    if(values.phoneNumber.length > 0 && phoneNumberRegex.test(values.phoneNumber) === false) {
+        errors.phoneNumber= "Phone number is not valid."
+        isValid = false 
+    }
+
+    if(values.email.length <=0 || emailRegex.test(values.email) === false) {
+      errors.email= "Email is not valid"
       isValid = false
     }
+    setEditErrors(errors)
     return isValid
   }
 

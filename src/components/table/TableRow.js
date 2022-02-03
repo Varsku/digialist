@@ -53,6 +53,4 @@ function TableRow({
   return <TableDataRow>{renderContent()}</TableDataRow>;
 }
 
-TableRow.propTypes = {};
-
 export default TableRow;

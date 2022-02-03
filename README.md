@@ -11,3 +11,7 @@ First start with command
 then you can run the application with
 
 ### `yarn start or npm start`
+
+After this you can access the app at
+
+### `localhost:3000`

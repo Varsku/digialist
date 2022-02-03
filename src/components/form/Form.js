@@ -40,21 +40,33 @@ function Form({onClick}) {
 
   const isValidForm = (values) => {
     let isValid = true;
+    let validationErrors = {
+      name: "",
+      email: "",
+      phoneNumber:""
+    }
     const regex =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      const phoneNumberRegex = /^[+]{0,1}[0-9\b]+$/;
     if(values.name.length <=0) {
-      setErrors({...errors, name: "Name is required"})
+      validationErrors.name= "Name is required";
       isValid = false
     }
     if(values.phoneNumber.length <= 0) {
-      setErrors({...errors, phoneNumber: "Phone number is required"})
+      validationErrors.phoneNumber= "Phone number is required";
       isValid = false
     }
 
+    if(values.phoneNumber.length > 0 && phoneNumberRegex.test(values.phoneNumber) === false) {
+      validationErrors.phoneNumber= "Phone number is not valid."
+      isValid = false 
+  }
+
     if(values.email.length <=0 || regex.test(values.email) === false) {
-      setErrors({...errors, email: "Email is not valid"})
+      validationErrors.email= "Email is not valid"
       isValid = false
     }
+    setErrors(validationErrors)
     return isValid
   }
   

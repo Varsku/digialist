@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import './App.css';
+import {AppContainer, AppTitle, Content} from "./App.styled"
 import Header from './components/header/Header';
 import Form from './components/form/Form';
 import Table from "./components/table/Table"
@@ -29,14 +29,14 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <AppContainer>
       <Header />
-      <div className="Content">
-        <h1 className="Title-text">List of participants</h1>
+      <Content>
+        <AppTitle>List of participants</AppTitle>
         <Form onClick={addUserToList}/>
         <Table data={data} headers={tableHeaders} deleteUser={deleteUser} saveEditUser={saveEditUser}/>
-      </div>
-    </div>
+      </Content>
+    </AppContainer>
   );
 }
 
